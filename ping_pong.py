@@ -107,7 +107,9 @@ while game:
             
             if e.key == K_r and finish:
                 score1 = 0
+                score_text1 = font_score.render(str(score1) , True, text_color)
                 score2 = 0
+                score_text2 = font_score.render(str(score2) , True, text_color)
                 finish = False
                 ball.start()
 
@@ -121,10 +123,12 @@ while game:
         player2.reset()
         ball.update()
         ball.reset()
-        if sprite.collide_rect(ball, player2):
-            ball.speed_x = -1 * abs(ball.speed_x)
-        if sprite.collide_rect(ball, player1):
-            ball.speed_x = abs(ball.speed_x)
+        if sprite.collide_rect(ball, player2):  # правый
+            if ball.rect.centerx < player2.rect.left:
+                ball.speed_x = -1 * abs(ball.speed_x)
+        if sprite.collide_rect(ball, player1):  # левый
+            if ball.rect.centerx > player1.rect.right:
+                ball.speed_x = abs(ball.speed_x)
 
         if ball.rect.x < -50:
             score2 +=1
